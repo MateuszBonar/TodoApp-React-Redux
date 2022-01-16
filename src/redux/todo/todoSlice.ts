@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 import {TODO} from "../../api/paths";
+import {initialStateTodo} from "./initialState";
 
 export const getTodosAsync = createAsyncThunk(
 	'todos/getTodosAsync',
@@ -69,53 +70,47 @@ export const deleteTodoAsync = createAsyncThunk(
 
 export const todoSlice = createSlice({
 	name: 'todos',
-	initialState: [],
+	initialState: initialStateTodo,
 	reducers: {
-		addTodo: (state, action) => {
-			const todo = {
-				id: nanoid(),
-				title: action.payload.title,
-				completed: false,
-			};
-			// @ts-ignore
-			state.push(todo);
-		},
-		toggleComplete: (state, action) => {
-			// @ts-ignore
-			const index = state.findIndex((todo) => todo.id === action.payload.id);
-			// @ts-ignore
-			state[index].completed = action.payload.completed;
-		},
-		deleteTodo: (state, action) => {
-			// @ts-ignore
-			return state.filter((todo) => todo.id !== action.payload.id);
-		},
 	},
 	extraReducers: {
 		// @ts-ignore
 		[getTodosAsync.fulfilled]: (state, action) => {
-			return action.payload.todos;
+			return {
+				...state,
+				todos: action.payload.todos};
 		},
 		// @ts-ignore
 		[addTodoAsync.fulfilled]: (state, action) => {
-			state.push(action.payload.todo);
+			state.push( {
+				...state,
+				todos: action.payload.todo, isLoading: false, error: null});
 		},
 		// @ts-ignore
 		[toggleCompleteAsync.fulfilled]: (state, action) => {
-			const index = state.findIndex(
-				// @ts-ignore
-				(todo) => todo.id === action.payload.todo.id
-			);
-			state[index].completed = action.payload.todo.completed;
+			return {
+				...state,
+				todosModule: {
+					...state.todosModule,
+					todos: [...state.todosModule.todos].map( item => {
+						if(item.id === action.payload.todo.id) {
+							 return {...item, completed: action.payload.todo.completed}
+						}
+					})
+				}
+			}
 		},
 		// @ts-ignore
 		[deleteTodoAsync.fulfilled]: (state, action) => {
-			// @ts-ignore
-			return state.filter((todo) => todo.id !== action.payload.id);
+			return {
+				...state,
+				todosModule: {
+					...state.todosModule,
+					todos: [...state.todosModule.todos].filter((todo) => todo.id !== action.payload.id)
+				}
+			}
 		},
 	},
 });
-
-export const { addTodo, toggleComplete, deleteTodo } = todoSlice.actions;
 
 export default todoSlice.reducer;

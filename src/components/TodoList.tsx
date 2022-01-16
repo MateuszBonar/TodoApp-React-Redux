@@ -6,8 +6,9 @@ import { getTodosAsync } from '../redux/todo/todoSlice';
 const TodoList = () => {
 	const dispatch = useDispatch();
 	// @ts-ignore
-	const todos = useSelector((state) => state.todos);
+	const {todos} = useSelector((state) => state.todosModule);
 
+	console.log('todos', todos)
 	useEffect(() => {
 		dispatch(getTodosAsync());
 	}, [dispatch]);
