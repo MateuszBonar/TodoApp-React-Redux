@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, FormEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { addTodoAsync } from 'Redux/todo';
@@ -7,15 +7,14 @@ const AddTodoForm: FC = (): JSX.Element => {
   const [value, setValue] = useState('');
   const dispatch = useDispatch();
 
-  const handleValue = (event: any): void => {
+  const handleValue = (event: { target: HTMLInputElement }): void => {
     setValue(event.target.value);
   };
 
-  const onSubmit = (event: any): void => {
+  const onSubmit = (event: FormEvent): void => {
     event.preventDefault();
     if (value) {
       dispatch(
-        // @ts-ignore
         addTodoAsync({
           title: value,
         })

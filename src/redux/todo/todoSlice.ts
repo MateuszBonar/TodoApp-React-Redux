@@ -22,7 +22,7 @@ export const getTodosAsync = createAsyncThunk(
       })
 );
 
-export const addTodoAsync = createAsyncThunk(
+export const addTodoAsync = createAsyncThunk<any, any>(
   'todos/addTodoAsync',
   async (payload: ITodo): Promise<any> =>
     axios
@@ -66,42 +66,55 @@ export const todoSlice = createSlice({
   name: 'todos',
   initialState: initialStateTodo,
   reducers: {},
-  extraReducers: {
-    // @ts-ignore
-    [getTodosAsync.fulfilled]: (state, action) => {
+  extraReducers: builder => {
+    builder.addCase(getTodosAsync.pending, state => {
       return {
         ...state,
-        todos: action.payload.todos,
         isLoading: true,
         error: null,
       };
-    },
+    });
     // @ts-ignore
-    [addTodoAsync.fulfilled]: (state, action) => {
+    builder.addCase(getTodosAsync.fulfilled, (state, { payload }: ITodoModuleStore) => {
       return {
         ...state,
-        todos: [...state.todos, { id: nanoid(), title: action.payload.title, completed: false }],
+        todos: payload.todos,
+        isLoading: true,
+        error: null,
       };
-    },
+    });
     // @ts-ignore
-    [toggleCompleteAsync.fulfilled]: (state, action) => {
+    builder.addCase(addTodoAsync.fulfilled, (state, { payload }: ITodo) => {
       return {
         ...state,
+        todos: [...state.todos, { id: nanoid(), title: payload.title, completed: false }],
+      };
+    });
+    // @ts-ignore
+    builder.addCase(toggleCompleteAsync.fulfilled, (state, { payload }: ITodoModuleStore) => {
+      return {
+        ...state,
+        isLoading: false,
+        error: null,
         todoModule: {
           ...state,
-          todos: state.todos.map((item: ITodo) =>
-            item.id === action.payload.id ? { ...item, completed: action.payload.completed } : item
-          ),
+          todos: state.todos.map((item: ITodo) => {
+            console.log(item.id === payload.id);
+            return item.id === payload.id ? { ...item, completed: payload.completed } : null;
+          }),
         },
       };
-    },
+    });
     // @ts-ignore
-    [deleteTodoAsync.fulfilled]: (state, action) => {
+    builder.addCase(deleteTodoAsync.fulfilled, (state, { payload }: ITodoModuleStore) => {
       return {
         ...state,
-        todos: state.todos.filter((todo: ITodo) => todo.id !== action.payload.id),
+        todos: {
+          ...state.todos,
+          todos: [...state.todos].filter((todo: ITodo) => todo.id !== payload),
+        },
       };
-    },
+    });
   },
 });
 
