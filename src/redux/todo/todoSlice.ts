@@ -3,11 +3,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TODO } from 'Api/paths';
 import { httpClient } from 'Api/config';
 import { initialStateTodo } from './initialState';
+import { ITodo, ITodoModuleStore } from 'Redux/todo/types';
 
 const axios = httpClient();
 
 export const getTodosAsync = createAsyncThunk('todos/getTodosAsync', async () => {
-  const res = await axios.get(TODO.GET_ALL);
   const resp = await fetch(TODO.GET_ALL);
   if (resp.ok) {
     const todos = await resp.json();
@@ -15,13 +15,12 @@ export const getTodosAsync = createAsyncThunk('todos/getTodosAsync', async () =>
   }
 });
 
-export const addTodoAsync = createAsyncThunk('todos/addTodoAsync', async payload => {
+export const addTodoAsync = createAsyncThunk('todos/addTodoAsync', async (payload: ITodo) => {
   const resp = await fetch(TODO.GET_ALL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    // @ts-ignore
     body: JSON.stringify({ title: payload.title }),
   });
 
@@ -31,36 +30,34 @@ export const addTodoAsync = createAsyncThunk('todos/addTodoAsync', async payload
   }
 });
 
-export const toggleCompleteAsync = createAsyncThunk('todos/completeTodoAsync', async payload => {
-  // @ts-ignore
-  const resp = await fetch(TODO.TOGGLE_COMPLETE_TODO(payload.id), {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    // @ts-ignore
-    body: JSON.stringify({ completed: payload.completed }),
-  });
+export const toggleCompleteAsync = createAsyncThunk(
+  'todos/completeTodoAsync',
+  async (payload: ITodo) => {
+    const resp = await fetch(TODO.TOGGLE_COMPLETE_TODO(payload.id), {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ completed: payload.completed }),
+    });
 
-  if (resp.ok) {
-    const todo = await resp.json();
-    return { todo };
+    if (resp.ok) {
+      const todo = await resp.json();
+      return { todo };
+    }
   }
-});
+);
 
-export const deleteTodoAsync = createAsyncThunk('todos/deleteTodoAsync', async payload => {
-  // @ts-ignore
+export const deleteTodoAsync = createAsyncThunk('todos/deleteTodoAsync', async (payload: ITodo) => {
   const resp = await fetch(TODO.DELETE_TODO(payload.id), {
     method: 'DELETE',
   });
 
   if (resp.ok) {
-    // @ts-ignore
     return { id: payload.id };
   }
 });
 
-// @ts-ignore
 export const todoSlice = createSlice({
   name: 'todos',
   initialState: initialStateTodo,
@@ -73,11 +70,11 @@ export const todoSlice = createSlice({
         error: null,
       };
     });
-    builder.addCase(getTodosAsync.fulfilled, (state, action) => {
+    // @ts-ignore
+    builder.addCase(getTodosAsync.fulfilled, (state, { payload }: ITodoModuleStore) => {
       return {
         ...state,
-        // @ts-ignore
-        todos: action.payload.todos,
+        todos: payload.todos,
         isLoading: true,
         error: null,
       };
@@ -90,33 +87,27 @@ export const todoSlice = createSlice({
       };
     });
     // @ts-ignore
-    builder.addCase(toggleCompleteAsync.fulfilled, (state, action) => {
+    builder.addCase(toggleCompleteAsync.fulfilled, (state, { payload }: ITodoModuleStore) => {
       return {
         ...state,
         todoModule: {
           ...state,
-          todos: [...state.todos].map(item => {
-            // @ts-ignore
-            if (item.id === action.payload.id) {
-              // @ts-ignore
-              return { ...item, completed: action.payload.completed };
+          todos: [...state.todos].map((item: ITodo) => {
+            if (item.id === payload.id) {
+              return { ...item, completed: payload.completed };
             }
-            // @ts-ignore
-            return { ...item };
+            return item;
           }),
         },
       };
     });
-
-    builder.addCase(deleteTodoAsync.fulfilled, (state, action) => {
+    // @ts-ignore
+    builder.addCase(deleteTodoAsync.fulfilled, (state, { payload }: ITodoModuleStore) => {
       return {
         ...state,
         todos: {
           ...state.todos,
-          todos: [...state.todos].filter(
-            // @ts-ignore
-            todo => todo.id !== action.payload.id
-          ),
+          todos: [...state.todos].filter((todo: ITodo) => todo.id !== payload.id),
         },
       };
     });
