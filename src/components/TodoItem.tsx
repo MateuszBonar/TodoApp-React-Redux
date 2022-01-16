@@ -33,6 +33,7 @@ const TodoItem: FC<{ id: string; title: string; completed: boolean }> = ({
             type="checkbox"
             className="mr-3"
             checked={completed}
+            disabled={isLoading}
             onClick={handleCheckboxClick}
           />
           {title}
