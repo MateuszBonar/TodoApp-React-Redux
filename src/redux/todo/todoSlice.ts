@@ -96,13 +96,9 @@ export const todoSlice = createSlice({
         ...state,
         isLoading: false,
         error: null,
-        todoModule: {
-          ...state,
-          todos: state.todos.map((item: ITodo) => {
-            console.log(item.id === payload.id);
-            return item.id === payload.id ? { ...item, completed: payload.completed } : null;
-          }),
-        },
+        todos: state.todos.map((item: ITodo) =>
+          item.id === payload.id ? { ...item, completed: payload.completed } : item
+        ),
       };
     });
     // @ts-ignore
