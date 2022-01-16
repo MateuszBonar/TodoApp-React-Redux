@@ -78,51 +78,61 @@ export const todoSlice = createSlice({
 	initialState: initialStateTodo,
 	reducers: {
 	},
-	extraReducers: {
-		// @ts-ignore
-		[getTodosAsync.fulfilled]: (state:ITodoModuleStore = initialStateTodo, action: IReduxAction<UIActionPayload>) => {
+	extraReducers: builder => {
+		builder.addCase(getTodosAsync.pending, (state, action) => {
 			return {
 				...state,
-				todos: action.payload.todos};
-		},
-		// @ts-ignore
-		[addTodoAsync.fulfilled]: (state:ITodoModuleStore = initialStateTodo, action: IReduxAction<UIActionPayload>)  => {
-			return {
-				...state,
-				todos: {
-					...state.todos,
-					// action.payload.todo as ITodo,
-				}
+				isLoading: true,
+				error: null
 			}
-		},
-		// @ts-ignore
-		[toggleCompleteAsync.fulfilled]: (state:ITodoModuleStore = initialStateTodo, action: IReduxAction<UIActionPayload>)  => {
-			return {
-				...state,
-				todosModule: {
+		})
+			builder.addCase(getTodosAsync.fulfilled, (state, action) => {
+				return {
 					...state,
-					todos: [...state.todos].map( item => {
-						if(item.id === action.payload.id) {
-							console.log('payload', action.payload)
-							console.log("Item:",item)
-							 return {...item, completed: action.payload.completed}
-						}
-						return {...item}
-					})
+				// @ts-ignore
+					todos: action.payload.todos,
+					isLoading: true,
+					error: null
 				}
-			}
-		},
+			})
 		// @ts-ignore
-		[deleteTodoAsync.fulfilled]: (state:ITodoModuleStore = initialStateTodo, action: IReduxAction<UIActionPayload>)  => {
-			return {
-				...state,
-				todos: {
-					...state.todos,
-					todos: [...state.todos].filter((todo) => todo.id !== action.payload.id)
-				}
-			}
-		},
-	},
+		builder.addCase(addTodoAsync.fulfilled, (state, action) => {
+					return {
+						...state,
+						todos: [...state.todos, action.payload],
+					}
+		})
+		// @ts-ignore
+		builder.addCase(toggleCompleteAsync.fulfilled, (state, action) => {
+					return {
+						...state,
+						todosModule: {
+							...state,
+							todos: [...state.todos].map( item => {
+								// @ts-ignore
+								if(item.id === action.payload.id) {
+									// @ts-ignore
+									 return {...item, completed: action.payload.completed}
+								}
+								// @ts-ignore
+								return {...item}
+							})
+						}
+					}
+		})
+
+		builder.addCase(deleteTodoAsync.fulfilled, (state, action) => {
+					return {
+						...state,
+						todos: {
+							...state.todos,
+							// @ts-ignore
+							todos: [...state.todos].filter((todo) => todo.id !== action.payload.id)
+						}
+					}
+		})
+
+	}
 });
 
 export default todoSlice.reducer;

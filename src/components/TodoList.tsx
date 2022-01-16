@@ -3,7 +3,7 @@ import TodoItem from './TodoItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTodosAsync } from '../redux/todo/todoSlice';
 import {ITodo} from "../redux/todo/types";
-import {getTodoModule, getTodos} from "../redux/todo/selectors";
+import {getTodoModule} from "../redux/todo/selectors";
 
 const TodoList = () => {
 	const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const TodoList = () => {
 
 	return (
 		<ul className='list-group'>
-			{todos.map((todo: ITodo) => (
+			{todos?.map((todo: ITodo) => (
 				<TodoItem key={todo.id} id={todo.id} title={todo.title} completed={todo.completed} />
 			))}
 		</ul>
