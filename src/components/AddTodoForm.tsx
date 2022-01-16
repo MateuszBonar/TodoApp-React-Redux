@@ -6,10 +6,11 @@ const AddTodoForm = () => {
 	const [value, setValue] = useState('');
 	const dispatch = useDispatch();
 
-	const onSubmit = (event) => {
+	const onSubmit = (event:any) => {
 		event.preventDefault();
 		if (value) {
 			dispatch(
+			// @ts-ignore
 				addTodoAsync({
 					title: value,
 				})

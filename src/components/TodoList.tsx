@@ -5,6 +5,7 @@ import { getTodosAsync } from '../redux/todoSlice';
 
 const TodoList = () => {
 	const dispatch = useDispatch();
+	// @ts-ignore
 	const todos = useSelector((state) => state.todos);
 
 	useEffect(() => {
@@ -13,7 +14,7 @@ const TodoList = () => {
 
 	return (
 		<ul className='list-group'>
-			{todos.map((todo) => (
+			{todos.map((todo: any) => (
 				<TodoItem id={todo.id} title={todo.title} completed={todo.completed} />
 			))}
 		</ul>

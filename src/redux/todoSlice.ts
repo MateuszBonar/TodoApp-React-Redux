@@ -20,6 +20,7 @@ export const addTodoAsync = createAsyncThunk(
 			headers: {
 				'Content-Type': 'application/json',
 			},
+			// @ts-ignore
 			body: JSON.stringify({ title: payload.title }),
 		});
 
@@ -33,11 +34,13 @@ export const addTodoAsync = createAsyncThunk(
 export const toggleCompleteAsync = createAsyncThunk(
 	'todos/completeTodoAsync',
 	async (payload) => {
+		// @ts-ignore
 		const resp = await fetch(`http://localhost:7000/todos/${payload.id}`, {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
 			},
+			// @ts-ignore
 			body: JSON.stringify({ completed: payload.completed }),
 		});
 
@@ -51,11 +54,13 @@ export const toggleCompleteAsync = createAsyncThunk(
 export const deleteTodoAsync = createAsyncThunk(
 	'todos/deleteTodoAsync',
 	async (payload) => {
+		// @ts-ignore
 		const resp = await fetch(`http://localhost:7000/todos/${payload.id}`, {
 			method: 'DELETE',
 		});
 
 		if (resp.ok) {
+			// @ts-ignore
 			return { id: payload.id };
 		}
 	}
@@ -71,30 +76,40 @@ export const todoSlice = createSlice({
 				title: action.payload.title,
 				completed: false,
 			};
+			// @ts-ignore
 			state.push(todo);
 		},
 		toggleComplete: (state, action) => {
+			// @ts-ignore
 			const index = state.findIndex((todo) => todo.id === action.payload.id);
+			// @ts-ignore
 			state[index].completed = action.payload.completed;
 		},
 		deleteTodo: (state, action) => {
+			// @ts-ignore
 			return state.filter((todo) => todo.id !== action.payload.id);
 		},
 	},
 	extraReducers: {
+		// @ts-ignore
 		[getTodosAsync.fulfilled]: (state, action) => {
 			return action.payload.todos;
 		},
+		// @ts-ignore
 		[addTodoAsync.fulfilled]: (state, action) => {
 			state.push(action.payload.todo);
 		},
+		// @ts-ignore
 		[toggleCompleteAsync.fulfilled]: (state, action) => {
 			const index = state.findIndex(
+				// @ts-ignore
 				(todo) => todo.id === action.payload.todo.id
 			);
 			state[index].completed = action.payload.todo.completed;
 		},
+		// @ts-ignore
 		[deleteTodoAsync.fulfilled]: (state, action) => {
+			// @ts-ignore
 			return state.filter((todo) => todo.id !== action.payload.id);
 		},
 	},
