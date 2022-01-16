@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { toggleCompleteAsync, deleteTodoAsync } from 'Redux/todo';
+import { toggleCompleteAsync, deleteTodoAsync, getIsLoading } from 'Redux/todo';
 
 const TodoItem: FC<{ id: string; title: string; completed: boolean }> = ({
   id,
@@ -9,6 +9,7 @@ const TodoItem: FC<{ id: string; title: string; completed: boolean }> = ({
   completed,
 }) => {
   const dispatch = useDispatch();
+  const isLoading = useSelector(getIsLoading);
 
   const handleCheckboxClick = (): void => {
     dispatch(toggleCompleteAsync({ id, completed: !completed }));
@@ -30,7 +31,7 @@ const TodoItem: FC<{ id: string; title: string; completed: boolean }> = ({
           />
           {title}
         </span>
-        <button onClick={handleDeleteClick} className="btn btn-danger">
+        <button onClick={handleDeleteClick} className="btn btn-danger" disabled={isLoading}>
           Delete
         </button>
       </div>

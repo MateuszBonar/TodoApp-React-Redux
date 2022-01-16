@@ -4,7 +4,6 @@ import { nanoid } from 'nanoid';
 import { TODO, httpClient } from 'Api';
 import { initialStateTodo } from './initialState';
 import { ITodo, ITodoModuleStore } from 'Redux/todo';
-import { IStore } from 'Redux/types';
 
 const axios = httpClient();
 
@@ -22,7 +21,7 @@ export const getTodosAsync = createAsyncThunk(
       })
 );
 
-export const addTodoAsync = createAsyncThunk<any, any>(
+export const addTodoAsync = createAsyncThunk<ITodo, any>(
   'todos/addTodoAsync',
   async (payload: ITodo): Promise<any> =>
     axios
@@ -35,7 +34,7 @@ export const addTodoAsync = createAsyncThunk<any, any>(
       })
 );
 
-export const toggleCompleteAsync = createAsyncThunk<any, any>(
+export const toggleCompleteAsync = createAsyncThunk<ITodo, any>(
   'todos/completeTodoAsync',
   async (payload: ITodo): Promise<any> =>
     axios
@@ -48,7 +47,7 @@ export const toggleCompleteAsync = createAsyncThunk<any, any>(
       })
 );
 
-export const deleteTodoAsync = createAsyncThunk<any, any>(
+export const deleteTodoAsync = createAsyncThunk<ITodo, any>(
   'todos/deleteTodoAsync',
   async (payload: ITodo): Promise<any> =>
     await axios
@@ -61,7 +60,6 @@ export const deleteTodoAsync = createAsyncThunk<any, any>(
       })
 );
 
-// @ts-ignore
 export const todoSlice = createSlice({
   name: 'todos',
   initialState: initialStateTodo,
@@ -79,6 +77,14 @@ export const todoSlice = createSlice({
       return {
         ...state,
         todos: payload.todos,
+        isLoading: false,
+        error: null,
+      };
+    });
+    // @ts-ignore
+    builder.addCase(addTodoAsync.pending, (state, { payload }: ITodo) => {
+      return {
+        ...state,
         isLoading: true,
         error: null,
       };
@@ -88,6 +94,16 @@ export const todoSlice = createSlice({
       return {
         ...state,
         todos: [...state.todos, { id: nanoid(), title: payload.title, completed: false }],
+        isLoading: false,
+        error: null,
+      };
+    });
+    // @ts-ignore
+    builder.addCase(toggleCompleteAsync.pending, (state, { payload }: ITodoModuleStore) => {
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
       };
     });
     // @ts-ignore
@@ -102,13 +118,23 @@ export const todoSlice = createSlice({
       };
     });
     // @ts-ignore
+    builder.addCase(deleteTodoAsync.pending, (state, { payload }: ITodoModuleStore) => {
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
+    });
+    // @ts-ignore
     builder.addCase(deleteTodoAsync.fulfilled, (state, { payload }: ITodoModuleStore) => {
       return {
         ...state,
+        isLoading: false,
+        error: null,
         todos: state.todos.filter((todo: ITodo) => todo.id !== payload),
       };
     });
   },
 });
-
+export const {} = todoSlice.actions;
 export default todoSlice.reducer;

@@ -6,7 +6,7 @@ import TodoItem from './TodoItem';
 
 const TodoList: FC = (): JSX.Element => {
   const dispatch = useDispatch();
-  const { todos, isLoading } = useSelector(getTodoModule);
+  const { todos } = useSelector(getTodoModule);
 
   useEffect(() => {
     dispatch(getTodosAsync());

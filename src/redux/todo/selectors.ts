@@ -5,5 +5,7 @@ export const getTodoModule = (state: RootState): ITodoModuleStore => state.todoM
 
 export const getTodos = (state: RootState): ITodo[] => state.todoModule.todos;
 
+export const getIsLoading = (state: RootState): boolean => state.todoModule.isLoading;
+
 export const getFinishedTodos = (state: RootState): ITodo[] =>
   state.todoModule.todos?.filter((todo: ITodo) => todo.completed);
