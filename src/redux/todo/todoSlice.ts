@@ -35,7 +35,7 @@ export const addTodoAsync = createAsyncThunk<any, any>(
       })
 );
 
-export const toggleCompleteAsync = createAsyncThunk(
+export const toggleCompleteAsync = createAsyncThunk<any, any>(
   'todos/completeTodoAsync',
   async (payload: ITodo): Promise<any> =>
     axios
@@ -48,7 +48,7 @@ export const toggleCompleteAsync = createAsyncThunk(
       })
 );
 
-export const deleteTodoAsync = createAsyncThunk(
+export const deleteTodoAsync = createAsyncThunk<any, any>(
   'todos/deleteTodoAsync',
   async (payload: ITodo): Promise<any> =>
     await axios
@@ -109,10 +109,7 @@ export const todoSlice = createSlice({
     builder.addCase(deleteTodoAsync.fulfilled, (state, { payload }: ITodoModuleStore) => {
       return {
         ...state,
-        todos: {
-          ...state.todos,
-          todos: [...state.todos].filter((todo: ITodo) => todo.id !== payload),
-        },
+        todos: state.todos.filter((todo: ITodo) => todo.id !== payload),
       };
     });
   },

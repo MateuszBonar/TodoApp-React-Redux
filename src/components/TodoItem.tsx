@@ -11,12 +11,10 @@ const TodoItem: FC<{ id: string; title: string; completed: boolean }> = ({
   const dispatch = useDispatch();
 
   const handleCheckboxClick = (): void => {
-    // @ts-ignore
     dispatch(toggleCompleteAsync({ id, completed: !completed }));
   };
 
   const handleDeleteClick = (): void => {
-    // @ts-ignore
     dispatch(deleteTodoAsync({ id }));
   };
 
