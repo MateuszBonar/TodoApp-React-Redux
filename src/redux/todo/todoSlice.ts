@@ -29,10 +29,7 @@ export const addTodoAsync = createAsyncThunk(
       .post(TODO.GET_ALL, {
         title: payload.title,
       })
-      .then(res => {
-        const todo = res.data;
-        return { todo };
-      })
+      .then(res => res.data)
       .catch(_ => {
         throw new Error('Something went wrong');
       })
@@ -45,10 +42,7 @@ export const toggleCompleteAsync = createAsyncThunk(
       .patch(TODO.TOGGLE_COMPLETE_TODO(payload.id), {
         completed: payload.completed,
       })
-      .then(res => {
-        const todo = res.data;
-        return { todo };
-      })
+      .then(res => res.data)
       .catch(_ => {
         throw new Error('Something went wrong');
       })
@@ -60,63 +54,54 @@ export const deleteTodoAsync = createAsyncThunk(
     await axios
       .delete(TODO.DELETE_TODO(payload.id))
       .then(() => {
-        return { id: payload.id };
+        return payload.id;
       })
       .catch(_ => {
         throw new Error('Something went wrong');
       })
 );
 
+// @ts-ignore
 export const todoSlice = createSlice({
   name: 'todos',
   initialState: initialStateTodo,
   reducers: {},
-  extraReducers: builder => {
-    builder.addCase(getTodosAsync.pending, state => {
+  extraReducers: {
+    // @ts-ignore
+    [getTodosAsync.fulfilled]: (state, action) => {
       return {
         ...state,
+        todos: action.payload.todos,
         isLoading: true,
         error: null,
       };
-    });
+    },
     // @ts-ignore
-    builder.addCase(getTodosAsync.fulfilled, (state, { payload }: ITodoModuleStore) => {
+    [addTodoAsync.fulfilled]: (state, action) => {
       return {
         ...state,
-        todos: payload.todos,
-        isLoading: true,
-        error: null,
+        todos: [...state.todos, { id: nanoid(), title: action.payload.title, completed: false }],
       };
-    });
+    },
     // @ts-ignore
-    builder.addCase(addTodoAsync.fulfilled, (state, { payload }: ITodo) => {
-      return {
-        ...state,
-        todos: [...state.todos, { id: nanoid(), title: payload.title, completed: false }],
-      };
-    });
-    // @ts-ignore
-    builder.addCase(toggleCompleteAsync.fulfilled, (state, { payload }: ITodoModuleStore) => {
+    [toggleCompleteAsync.fulfilled]: (state, action) => {
       return {
         ...state,
         todoModule: {
           ...state,
           todos: state.todos.map((item: ITodo) =>
-            item.id === payload.id ? { ...item, completed: payload.completed } : item
+            item.id === action.payload.id ? { ...item, completed: action.payload.completed } : item
           ),
         },
       };
-    });
+    },
     // @ts-ignore
-    builder.addCase(deleteTodoAsync.fulfilled, (state, { payload }: ITodoModuleStore) => {
+    [deleteTodoAsync.fulfilled]: (state, action) => {
       return {
         ...state,
-        todos: {
-          ...state.todos,
-          todos: [...state.todos].filter((todo: ITodo) => todo.id !== payload),
-        },
+        todos: state.todos.filter((todo: ITodo) => todo.id !== action.payload.id),
       };
-    });
+    },
   },
 });
 

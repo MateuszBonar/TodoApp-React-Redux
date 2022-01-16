@@ -10,7 +10,7 @@ const TodoList: FC = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(getTodosAsync());
-  }, [dispatch]);
+  }, []);
 
   return (
     <ul className="list-group">
