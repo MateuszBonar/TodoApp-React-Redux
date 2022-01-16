@@ -1,7 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
 import {TODO} from "../../api/paths";
 import {initialStateTodo} from "./initialState";
+import {httpClient} from "../../api/config";
+import {ITodo, ITodoModuleStore} from "./types";
+import {IReduxAction} from "../types";
+
+const axios = httpClient()
 
 export const getTodosAsync = createAsyncThunk(
 	'todos/getTodosAsync',
@@ -68,6 +72,7 @@ export const deleteTodoAsync = createAsyncThunk(
 	}
 );
 
+// @ts-ignore
 export const todoSlice = createSlice({
 	name: 'todos',
 	initialState: initialStateTodo,
@@ -75,38 +80,45 @@ export const todoSlice = createSlice({
 	},
 	extraReducers: {
 		// @ts-ignore
-		[getTodosAsync.fulfilled]: (state, action) => {
+		[getTodosAsync.fulfilled]: (state:ITodoModuleStore = initialStateTodo, action: IReduxAction<UIActionPayload>) => {
 			return {
 				...state,
 				todos: action.payload.todos};
 		},
 		// @ts-ignore
-		[addTodoAsync.fulfilled]: (state, action) => {
-			state.push( {
+		[addTodoAsync.fulfilled]: (state:ITodoModuleStore = initialStateTodo, action: IReduxAction<UIActionPayload>)  => {
+			return {
 				...state,
-				todos: action.payload.todo, isLoading: false, error: null});
+				todos: {
+					...state.todos,
+					// action.payload.todo as ITodo,
+				}
+			}
 		},
 		// @ts-ignore
-		[toggleCompleteAsync.fulfilled]: (state, action) => {
+		[toggleCompleteAsync.fulfilled]: (state:ITodoModuleStore = initialStateTodo, action: IReduxAction<UIActionPayload>)  => {
 			return {
 				...state,
 				todosModule: {
-					...state.todosModule,
-					todos: [...state.todosModule.todos].map( item => {
-						if(item.id === action.payload.todo.id) {
-							 return {...item, completed: action.payload.todo.completed}
+					...state,
+					todos: [...state.todos].map( item => {
+						if(item.id === action.payload.id) {
+							console.log('payload', action.payload)
+							console.log("Item:",item)
+							 return {...item, completed: action.payload.completed}
 						}
+						return {...item}
 					})
 				}
 			}
 		},
 		// @ts-ignore
-		[deleteTodoAsync.fulfilled]: (state, action) => {
+		[deleteTodoAsync.fulfilled]: (state:ITodoModuleStore = initialStateTodo, action: IReduxAction<UIActionPayload>)  => {
 			return {
 				...state,
-				todosModule: {
-					...state.todosModule,
-					todos: [...state.todosModule.todos].filter((todo) => todo.id !== action.payload.id)
+				todos: {
+					...state.todos,
+					todos: [...state.todos].filter((todo) => todo.id !== action.payload.id)
 				}
 			}
 		},

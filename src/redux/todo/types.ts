@@ -10,3 +10,5 @@ export interface ITodo {
 export interface ITodoModuleStore extends IStoreModule {
     todos: ITodo[];
 }
+
+export type TodoActionPayload = ITodo | ITodo[] | Error | null;
