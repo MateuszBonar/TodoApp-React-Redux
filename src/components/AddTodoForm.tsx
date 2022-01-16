@@ -3,9 +3,10 @@ import { useTranslation } from 'react-i18next';
 
 import { useDispatchedActions } from 'Hooks';
 import { todoActions } from 'Redux/todo/todoSlice';
+import { INITIAL_STATE_SEARCH } from 'Constants';
 
 const AddTodoForm: FC = (): JSX.Element => {
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string>(INITIAL_STATE_SEARCH);
   const { t } = useTranslation();
 
   const { addTodoAsync } = useDispatchedActions({
@@ -22,6 +23,7 @@ const AddTodoForm: FC = (): JSX.Element => {
       addTodoAsync({
         title: value,
       });
+    setValue(INITIAL_STATE_SEARCH);
   };
 
   return (
