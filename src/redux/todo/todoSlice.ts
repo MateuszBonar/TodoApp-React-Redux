@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
+import {TODO} from "../../api/paths";
 
 export const getTodosAsync = createAsyncThunk(
 	'todos/getTodosAsync',
 	async () => {
-		const resp = await fetch('http://localhost:7000/todos');
+		const resp = await fetch(TODO.GET_ALL);
 		if (resp.ok) {
 			const todos = await resp.json();
 			return { todos };
@@ -15,7 +16,7 @@ export const getTodosAsync = createAsyncThunk(
 export const addTodoAsync = createAsyncThunk(
 	'todos/addTodoAsync',
 	async (payload) => {
-		const resp = await fetch('http://localhost:7000/todos', {
+		const resp = await fetch(TODO.GET_ALL, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -35,7 +36,7 @@ export const toggleCompleteAsync = createAsyncThunk(
 	'todos/completeTodoAsync',
 	async (payload) => {
 		// @ts-ignore
-		const resp = await fetch(`http://localhost:7000/todos/${payload.id}`, {
+		const resp = await fetch(TODO.TOGGLE_COMPLETE_TODO(payload.id), {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
@@ -55,7 +56,7 @@ export const deleteTodoAsync = createAsyncThunk(
 	'todos/deleteTodoAsync',
 	async (payload) => {
 		// @ts-ignore
-		const resp = await fetch(`http://localhost:7000/todos/${payload.id}`, {
+		const resp = await fetch(TODO.DELETE_TODO(payload.id), {
 			method: 'DELETE',
 		});
 

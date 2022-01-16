@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import { useDispatch } from 'react-redux';
-import { toggleCompleteAsync, deleteTodoAsync } from '../redux/todoSlice';
+import { toggleCompleteAsync, deleteTodoAsync } from '../redux/todo/todoSlice';
 
 const TodoItem:FC<{id: any, title: any, completed: any}> = ({ id, title, completed }) => {
 	const dispatch = useDispatch();
