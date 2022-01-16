@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { TODO } from '../../api/paths';
+
+import { TODO } from 'Api/paths';
+import { httpClient } from 'Api/config';
 import { initialStateTodo } from './initialState';
-import { httpClient } from '../../api/config';
 
 const axios = httpClient();
 
@@ -92,7 +93,7 @@ export const todoSlice = createSlice({
     builder.addCase(toggleCompleteAsync.fulfilled, (state, action) => {
       return {
         ...state,
-        todosModule: {
+        todoModule: {
           ...state,
           todos: [...state.todos].map(item => {
             // @ts-ignore

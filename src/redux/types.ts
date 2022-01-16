@@ -22,7 +22,7 @@ export interface IStoreModule {
 }
 
 export interface IStore {
-  todosModule: ITodoModuleStore;
+  todoModule: ITodoModuleStore;
 }
 
 export type RootState = ReturnType<typeof rootReducer>;

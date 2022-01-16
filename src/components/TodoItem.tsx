@@ -1,8 +1,13 @@
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { toggleCompleteAsync, deleteTodoAsync } from '../redux/todo/todoSlice';
 
-const TodoItem: FC<{ id: any; title: any; completed: any }> = ({ id, title, completed }) => {
+import { toggleCompleteAsync, deleteTodoAsync } from 'Redux/todo/todoSlice';
+
+const TodoItem: FC<{ id: string; title: string; completed: boolean }> = ({
+  id,
+  title,
+  completed,
+}) => {
   const dispatch = useDispatch();
 
   const handleCheckboxClick = () => {
@@ -24,7 +29,7 @@ const TodoItem: FC<{ id: any; title: any; completed: any }> = ({ id, title, comp
             className="mr-3"
             checked={completed}
             onClick={handleCheckboxClick}
-          ></input>
+          />
           {title}
         </span>
         <button onClick={handleDeleteClick} className="btn btn-danger">

@@ -1,19 +1,11 @@
 import axios, { AxiosInstance } from 'axios';
-
-const HARDCODED_TOKEN = '';
-
-export const BACKEND_URL = '';
-export const LOCAL_URL = 'http://localhost:3000';
+import { BACKEND_URL, HARDCODED_TOKEN, LOCAL_URL } from 'Constants';
 
 export const httpClient = (): AxiosInstance => {
   let authHeader = {};
 
   if (window.location.origin === LOCAL_URL) {
     authHeader = sessionStorage.getItem('token') ? { Authorization: HARDCODED_TOKEN } : {};
-  } else {
-    authHeader = sessionStorage.getItem('token')
-      ? { Authorization: sessionStorage.getItem('token') }
-      : {};
   }
 
   const httpClient = axios.create({
