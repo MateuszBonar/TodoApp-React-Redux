@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { getFinishedTodos } from '../redux/todo/selectors';
+import { getFinishedTodos } from '../redux/todo';
 
 const TotalCompleteItems = () => {
   const finishedTodos = useSelector(getFinishedTodos);

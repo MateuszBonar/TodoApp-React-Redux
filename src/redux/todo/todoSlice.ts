@@ -6,6 +6,7 @@ import { httpClient } from '../../api/config';
 const axios = httpClient();
 
 export const getTodosAsync = createAsyncThunk('todos/getTodosAsync', async () => {
+  const res = await axios.get(TODO.GET_ALL);
   const resp = await fetch(TODO.GET_ALL);
   if (resp.ok) {
     const todos = await resp.json();
