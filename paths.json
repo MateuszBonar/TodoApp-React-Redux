@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "Redux/*": [
+        "src/redux/*"
+      ],
+      "Redux": [
+        "src/redux"
+      ],
+      "Hooks/*": [
+        "src/hooks/*"
+      ],
+      "Hooks": [
+        "src/hooks"
+      ],
+      "Assets/*": [
+        "src/assets/*"
+      ],
+      "Assets": [
+        "src/assets"
+      ],
+      "Components/*": [
+        "src/components/*"
+      ],
+      "Components": [
+        "src/components"
+      ],
+      "Utils": [
+        "src/utils"
+      ],
+      "Utils/*": [
+        "src/utils/*"
+      ],
+      "Constants": [
+        "src/constants"
+      ],
+      "Constants/*": [
+        "src/constants/*"
+      ],
+      "Api": [
+        "src/api"
+      ],
+      "Api/*": [
+        "src/api/*"
+      ]
+    }
+  }
+}
