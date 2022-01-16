@@ -3,11 +3,11 @@ import TodoItem from './TodoItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTodosAsync } from '../redux/todo/todoSlice';
 import {ITodo} from "../redux/todo/types";
-import {RootState} from "../redux/types";
+import {getTodoModule, getTodos} from "../redux/todo/selectors";
 
 const TodoList = () => {
 	const dispatch = useDispatch();
-	const todos = useSelector((state: RootState) => state.todoModule.todos);
+	const {todos, isLoading} = useSelector(getTodoModule);
 
 	useEffect(() => {
 		dispatch(getTodosAsync());
