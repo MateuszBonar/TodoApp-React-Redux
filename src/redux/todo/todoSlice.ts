@@ -136,5 +136,6 @@ export const todoSlice = createSlice({
     });
   },
 });
+export const todoActions = { addTodoAsync, getTodosAsync, toggleCompleteAsync, deleteTodoAsync };
 export const {} = todoSlice.actions;
 export default todoSlice.reducer;

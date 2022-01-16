@@ -1,11 +1,14 @@
 import React, { FC, FormEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
-import { addTodoAsync } from 'Redux/todo';
+import { useDispatchedActions } from 'Hooks';
+import { todoActions } from 'Redux/todo/todoSlice';
 
 const AddTodoForm: FC = (): JSX.Element => {
-  const [value, setValue] = useState('');
-  const dispatch = useDispatch();
+  const [value, setValue] = useState<string>('');
+
+  const { addTodoAsync } = useDispatchedActions({
+    addTodoAsync: todoActions.addTodoAsync,
+  });
 
   const handleValue = (event: { target: HTMLInputElement }): void => {
     setValue(event.target.value);
@@ -13,13 +16,10 @@ const AddTodoForm: FC = (): JSX.Element => {
 
   const onSubmit = (event: FormEvent): void => {
     event.preventDefault();
-    if (value) {
-      dispatch(
-        addTodoAsync({
-          title: value,
-        })
-      );
-    }
+    value &&
+      addTodoAsync({
+        title: value,
+      });
   };
 
   return (

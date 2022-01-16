@@ -1,20 +1,9 @@
-import { ITodoModuleStore } from './todo/types';
-import { Action } from 'redux';
+import { ITodoModuleStore } from 'Redux/todo';
 import { rootReducer } from './rootReducer';
 
-export interface IActionWithError<P> {
-  error?: P;
+export interface ActionsParam {
+  [key: string]: Function;
 }
-
-export interface ILoadingAction {
-  loading?: boolean;
-}
-
-export interface IActionBody<P> extends IActionWithError<Error>, ILoadingAction {
-  payload?: P;
-}
-
-export interface IReduxAction<T> extends Action<string>, IActionBody<T> {}
 
 export interface IStoreModule {
   isLoading: boolean;

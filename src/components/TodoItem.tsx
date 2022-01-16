@@ -1,22 +1,26 @@
 import React, { FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { toggleCompleteAsync, deleteTodoAsync, getIsLoading } from 'Redux/todo';
+import { getIsLoading, todoActions } from 'Redux/todo';
+import { useDispatchedActions } from 'Hooks';
 
 const TodoItem: FC<{ id: string; title: string; completed: boolean }> = ({
   id,
   title,
   completed,
 }) => {
-  const dispatch = useDispatch();
+  const { deleteTodoAsync, toggleCompleteAsync } = useDispatchedActions({
+    deleteTodoAsync: todoActions.deleteTodoAsync,
+    toggleCompleteAsync: todoActions.toggleCompleteAsync,
+  });
   const isLoading = useSelector(getIsLoading);
 
   const handleCheckboxClick = (): void => {
-    dispatch(toggleCompleteAsync({ id, completed: !completed }));
+    toggleCompleteAsync({ id, completed: !completed });
   };
 
   const handleDeleteClick = (): void => {
-    dispatch(deleteTodoAsync({ id }));
+    deleteTodoAsync({ id });
   };
 
   return (

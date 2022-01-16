@@ -1,15 +1,18 @@
 import React, { FC, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { getTodoModule, ITodo, getTodosAsync } from 'Redux/todo';
+import { getTodoModule, ITodo, todoActions } from 'Redux/todo';
 import TodoItem from './TodoItem';
+import { useDispatchedActions } from 'Hooks';
 
 const TodoList: FC = (): JSX.Element => {
-  const dispatch = useDispatch();
+  const { getTodosAsync } = useDispatchedActions({
+    getTodosAsync: todoActions.getTodosAsync,
+  });
   const { todos } = useSelector(getTodoModule);
 
   useEffect(() => {
-    dispatch(getTodosAsync());
+    getTodosAsync();
   }, []);
 
   return (
