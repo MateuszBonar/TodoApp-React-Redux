@@ -6,7 +6,7 @@ import { ITodo, ITodoModuleStore } from 'Redux/todo';
 
 const axios = httpClient();
 
-export const getTodosAsync = createAsyncThunk('todos/getTodosAsync', async () => {
+export const getTodosAsync = createAsyncThunk('todos/getTodosAsync', async (): Promise<any> => {
   const resp = await fetch(TODO.GET_ALL);
   if (resp.ok) {
     const todos = await resp.json();
@@ -14,24 +14,27 @@ export const getTodosAsync = createAsyncThunk('todos/getTodosAsync', async () =>
   }
 });
 
-export const addTodoAsync = createAsyncThunk('todos/addTodoAsync', async (payload: ITodo) => {
-  const resp = await fetch(TODO.GET_ALL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ title: payload.title }),
-  });
+export const addTodoAsync = createAsyncThunk(
+  'todos/addTodoAsync',
+  async (payload: ITodo): Promise<any> => {
+    const resp = await fetch(TODO.GET_ALL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title: payload.title }),
+    });
 
-  if (resp.ok) {
-    const todo = await resp.json();
-    return { todo };
+    if (resp.ok) {
+      const todo = await resp.json();
+      return { todo };
+    }
   }
-});
+);
 
 export const toggleCompleteAsync = createAsyncThunk(
   'todos/completeTodoAsync',
-  async (payload: ITodo) => {
+  async (payload: ITodo): Promise<any> => {
     const resp = await fetch(TODO.TOGGLE_COMPLETE_TODO(payload.id), {
       method: 'PATCH',
       headers: {
@@ -47,15 +50,18 @@ export const toggleCompleteAsync = createAsyncThunk(
   }
 );
 
-export const deleteTodoAsync = createAsyncThunk('todos/deleteTodoAsync', async (payload: ITodo) => {
-  const resp = await fetch(TODO.DELETE_TODO(payload.id), {
-    method: 'DELETE',
-  });
+export const deleteTodoAsync = createAsyncThunk(
+  'todos/deleteTodoAsync',
+  async (payload: ITodo): Promise<any> => {
+    const resp = await fetch(TODO.DELETE_TODO(payload.id), {
+      method: 'DELETE',
+    });
 
-  if (resp.ok) {
-    return { id: payload.id };
+    if (resp.ok) {
+      return { id: payload.id };
+    }
   }
-});
+);
 
 export const todoSlice = createSlice({
   name: 'todos',

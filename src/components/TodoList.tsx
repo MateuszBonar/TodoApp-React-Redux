@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getTodoModule, ITodo, getTodosAsync } from 'Redux/todo';
 import TodoItem from './TodoItem';
 
-const TodoList = () => {
+const TodoList: FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const { todos, isLoading } = useSelector(getTodoModule);
 
