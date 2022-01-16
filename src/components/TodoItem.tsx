@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { toggleCompleteAsync, deleteTodoAsync } from 'Redux/todo/todoSlice';
+import { toggleCompleteAsync, deleteTodoAsync } from 'Redux/todo';
 
 const TodoItem: FC<{ id: string; title: string; completed: boolean }> = ({
   id,

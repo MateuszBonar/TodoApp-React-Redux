@@ -1,4 +1,4 @@
-import { IStoreModule } from '../types';
+import { IStoreModule } from 'Redux/types';
 
 export interface ITodo {
   id: string;

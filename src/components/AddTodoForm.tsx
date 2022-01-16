@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { addTodoAsync } from 'Redux/todo/todoSlice';
+import { addTodoAsync } from 'Redux/todo';
 
 const AddTodoForm = () => {
   const [value, setValue] = useState('');

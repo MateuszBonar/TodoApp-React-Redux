@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getTodoModule, ITodo } from 'Redux/todo';
+import { getTodoModule, ITodo, getTodosAsync } from 'Redux/todo';
 import TodoItem from './TodoItem';
-import { getTodosAsync } from 'Redux/todo/todoSlice';
 
 const TodoList = () => {
   const dispatch = useDispatch();

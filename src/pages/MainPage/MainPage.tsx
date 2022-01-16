@@ -1,7 +1,5 @@
 import React, { FC } from 'react';
-import AddTodoForm from '../../components/AddTodoForm';
-import TodoList from '../../components/TodoList';
-import TotalCompleteItems from '../../components/TotalCompleteItems';
+import { AddTodoForm, TodoList, TotalCompleteItems } from 'Components';
 
 const MainPage: FC = (): JSX.Element => {
   return (
