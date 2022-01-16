@@ -1,18 +1,18 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddTodoForm from './components/AddTodoForm';
 import TodoList from './components/TodoList';
 import TotalCompleteItems from './components/TotalCompleteItems';
 
-const App:FC = ():JSX.Element => {
-	return (
-		<div className='container bg-white p-4 mt-5'>
-			<h1>My Todo List</h1>
-			<AddTodoForm />
-			<TodoList />
-			<TotalCompleteItems />
-		</div>
-	);
+const App: FC = (): JSX.Element => {
+  return (
+    <div className="container bg-white p-4 mt-5">
+      <h1>My Todo List</h1>
+      <AddTodoForm />
+      <TodoList />
+      <TotalCompleteItems />
+    </div>
+  );
 };
 
 export default App;

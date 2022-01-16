@@ -1,14 +1,13 @@
-import {IStoreModule} from "../types";
-
+import { IStoreModule } from '../types';
 
 export interface ITodo {
-    id: string,
-    title: string,
-    completed: boolean,
+  id: string;
+  title: string;
+  completed: boolean;
 }
 
 export interface ITodoModuleStore extends IStoreModule {
-    todos: ITodo[];
+  todos: ITodo[];
 }
 
 export type TodoActionPayload = ITodo | ITodo[] | Error | null;
