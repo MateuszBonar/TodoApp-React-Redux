@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 import { TODO, httpClient } from 'Api';
 import { initialStateTodo } from './initialState';
 import { ITodo, ITodoModuleStore } from 'Redux/todo';
+import { IStore } from 'Redux/types';
 
 const axios = httpClient();
 
@@ -16,7 +17,9 @@ export const getTodosAsync = createAsyncThunk(
         const todos = res.data;
         return { todos };
       })
-      .catch(e => console.error(e))
+      .catch(_ => {
+        throw new Error('Something went wrong');
+      })
 );
 
 export const addTodoAsync = createAsyncThunk(
@@ -30,7 +33,9 @@ export const addTodoAsync = createAsyncThunk(
         const todo = res.data;
         return { todo };
       })
-      .catch(e => console.error(e))
+      .catch(_ => {
+        throw new Error('Something went wrong');
+      })
 );
 
 export const toggleCompleteAsync = createAsyncThunk(
@@ -42,10 +47,11 @@ export const toggleCompleteAsync = createAsyncThunk(
       })
       .then(res => {
         const todo = res.data;
-        console.log('todo', todo);
         return { todo };
       })
-      .catch(e => console.error(e))
+      .catch(_ => {
+        throw new Error('Something went wrong');
+      })
 );
 
 export const deleteTodoAsync = createAsyncThunk(
@@ -56,7 +62,9 @@ export const deleteTodoAsync = createAsyncThunk(
       .then(() => {
         return { id: payload.id };
       })
-      .catch(e => console.error(e))
+      .catch(_ => {
+        throw new Error('Something went wrong');
+      })
 );
 
 export const todoSlice = createSlice({
@@ -64,7 +72,7 @@ export const todoSlice = createSlice({
   initialState: initialStateTodo,
   reducers: {},
   extraReducers: builder => {
-    builder.addCase(getTodosAsync.pending, (state, action) => {
+    builder.addCase(getTodosAsync.pending, state => {
       return {
         ...state,
         isLoading: true,
