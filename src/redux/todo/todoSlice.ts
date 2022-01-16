@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { TODO } from 'Api/paths';
-import { httpClient } from 'Api/config';
+import { TODO, httpClient } from 'Api';
 import { initialStateTodo } from './initialState';
-import { ITodo, ITodoModuleStore } from 'Redux/todo/types';
+import { ITodo, ITodoModuleStore } from 'Redux/todo';
 
 const axios = httpClient();
 
