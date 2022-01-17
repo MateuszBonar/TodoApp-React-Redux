@@ -1,6 +1,7 @@
+import i18n from 'i18next';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AVAILABLE_LANGS, AVAILABLE_SYSTEM_LANGS, DEFAULT_SYSTEM_LANG } from 'Constants';
+import { AVAILABLE_LANGS, DEFAULT_SYSTEM_LANG } from 'Constants';
 import { useDispatchedActions } from 'Hooks';
 import { todoSlice } from 'Redux/todo/todoSlice';
 

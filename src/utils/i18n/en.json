@@ -1,0 +1,16 @@
+{
+  "translations": {
+    "btn_submit": "Accept",
+    "btn_delete": "Delete",
+    "inf_loading": "Loading ...",
+    "inf_total_items": "All completed tasks:",
+    "inf_add_placeholder": "Add to do",
+    "inf_title": "My To Do To List",
+    "inf_filter_all": "All",
+    "inf_filter_unfinished": "Incomplete",
+    "inf_filter_finished": "Completed",
+    "inf_active_language": "Active language",
+    "inf_lang_pl": "Polski",
+    "inf_lang_en": "English"
+  }
+}
