@@ -1,6 +1,6 @@
 {
   "translations": {
-    "btn_submit": "Accept",
+    "btn_submit": "Add",
     "btn_delete": "Delete",
     "inf_loading": "Loading ...",
     "inf_total_items": "All completed tasks:",

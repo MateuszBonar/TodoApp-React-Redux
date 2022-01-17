@@ -24,7 +24,6 @@ const AddTodoForm: FC = (): JSX.Element => {
       addTodoAsync({
         title: value,
       });
-    setValue(INITIAL_STATE_SEARCH);
   };
 
   return (
@@ -38,7 +37,7 @@ const AddTodoForm: FC = (): JSX.Element => {
           value={value}
           onChange={handleValue}
         />
-        <button type="submit" className="btn btn-primary mb-2">
+        <button type="submit" className="btn btn-primary mb-2" disabled={!value}>
           {t('btn_submit')}
         </button>
       </form>
