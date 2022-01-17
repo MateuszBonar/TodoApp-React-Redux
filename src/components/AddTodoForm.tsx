@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatchedActions } from 'Hooks';
 import { todoActions } from 'Redux/todo/todoSlice';
 import { INITIAL_STATE_SEARCH } from 'Constants';
+import Filters from 'Components/Filters';
 
 const AddTodoForm: FC = (): JSX.Element => {
   const [value, setValue] = useState<string>(INITIAL_STATE_SEARCH);
@@ -27,19 +28,22 @@ const AddTodoForm: FC = (): JSX.Element => {
   };
 
   return (
-    <form onSubmit={onSubmit} className="form-inline mt-3 mb-3">
-      <label className="sr-only">Name</label>
-      <input
-        type="text"
-        className="form-control mb-2 mr-sm-2"
-        placeholder={t('inf_add_placeholder')}
-        value={value}
-        onChange={handleValue}
-      />
-      <button type="submit" className="btn btn-primary mb-2">
-        {t('btn_submit')}
-      </button>
-    </form>
+    <>
+      <form onSubmit={onSubmit} className="form-inline mt-3 mb-3">
+        <label className="sr-only">Name</label>
+        <input
+          type="text"
+          className="form-control mb-2 mr-sm-2"
+          placeholder={t('inf_add_placeholder')}
+          value={value}
+          onChange={handleValue}
+        />
+        <button type="submit" className="btn btn-primary mb-2">
+          {t('btn_submit')}
+        </button>
+      </form>
+      <Filters />
+    </>
   );
 };
 

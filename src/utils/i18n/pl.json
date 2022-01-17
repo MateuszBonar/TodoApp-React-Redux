@@ -5,6 +5,9 @@
     "inf_loading": "Ładowanie...",
     "inf_total_items": "Wszystkie zakończone zadania: ",
     "inf_add_placeholder": "Dodaj do zrobienia",
-    "inf_title": "Moja To Do lista"
+    "inf_title": "Moja To Do lista",
+    "inf_filter_all": "Wszystkie",
+    "inf_filter_unfinished": "Nieukończone",
+    "inf_filter_finished": "Ukończone"
   }
 }

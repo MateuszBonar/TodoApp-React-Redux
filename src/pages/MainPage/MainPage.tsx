@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AddTodoForm, TodoList, TotalCompleteItems } from 'Components';
+import Filters from 'Components/Filters';
 
 const MainPage: FC = (): JSX.Element => {
   const { t } = useTranslation();

@@ -63,7 +63,14 @@ export const deleteTodoAsync = createAsyncThunk<ITodo, any>(
 export const todoSlice = createSlice({
   name: 'todos',
   initialState: initialStateTodo,
-  reducers: {},
+  reducers: {
+    setCurrentFilter: (state, action) => {
+      return {
+        ...state,
+        currentFilter: action.payload,
+      };
+    },
+  },
   extraReducers: builder => {
     builder.addCase(getTodosAsync.pending, state => {
       return {
@@ -137,5 +144,5 @@ export const todoSlice = createSlice({
   },
 });
 export const todoActions = { addTodoAsync, getTodosAsync, toggleCompleteAsync, deleteTodoAsync };
-export const {} = todoSlice.actions;
+export const { setCurrentFilter } = todoSlice.actions;
 export default todoSlice.reducer;

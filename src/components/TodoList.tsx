@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { getTodoModule, ITodo, todoActions } from 'Redux/todo';
+import { FILTER_TYPES, getTodoModule, ITodo, todoActions } from 'Redux/todo';
 import TodoItem from './TodoItem';
 import { useDispatchedActions } from 'Hooks';
 
@@ -9,7 +9,15 @@ const TodoList: FC = (): JSX.Element => {
   const { getTodosAsync } = useDispatchedActions({
     getTodosAsync: todoActions.getTodosAsync,
   });
-  const { todos } = useSelector(getTodoModule);
+  const { todos, currentFilter } = useSelector(getTodoModule);
+
+  const types: {
+    [key in FILTER_TYPES]: ITodo[];
+  } = {
+    [FILTER_TYPES.ALL]: todos,
+    [FILTER_TYPES.FINISHED]: todos.filter(el => el.completed),
+    [FILTER_TYPES.UNFINISHED]: todos.filter(el => !el.completed),
+  };
 
   useEffect(() => {
     getTodosAsync();
@@ -17,7 +25,7 @@ const TodoList: FC = (): JSX.Element => {
 
   return (
     <ul className="list-group">
-      {todos?.map((todo: ITodo) => (
+      {types[currentFilter]?.map((todo: ITodo) => (
         <TodoItem key={todo.id} id={todo.id} title={todo.title} completed={todo.completed} />
       ))}
     </ul>
