@@ -70,6 +70,12 @@ export const todoSlice = createSlice({
         currentFilter: action.payload,
       };
     },
+    setCurrentLanguage: (state, action) => {
+      return {
+        ...state,
+        currentLanguage: action.payload,
+      };
+    },
   },
   extraReducers: builder => {
     builder.addCase(getTodosAsync.pending, state => {
@@ -144,5 +150,5 @@ export const todoSlice = createSlice({
   },
 });
 export const todoActions = { addTodoAsync, getTodosAsync, toggleCompleteAsync, deleteTodoAsync };
-export const { setCurrentFilter } = todoSlice.actions;
+export const { setCurrentFilter, setCurrentLanguage } = todoSlice.actions;
 export default todoSlice.reducer;

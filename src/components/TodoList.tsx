@@ -9,9 +9,10 @@ const TodoList: FC = (): JSX.Element => {
   const { getTodosAsync } = useDispatchedActions({
     getTodosAsync: todoActions.getTodosAsync,
   });
+
   const { todos, currentFilter } = useSelector(getTodoModule);
 
-  const types: {
+  const currentTodos: {
     [key in FILTER_TYPES]: ITodo[];
   } = {
     [FILTER_TYPES.ALL]: todos,
@@ -25,7 +26,7 @@ const TodoList: FC = (): JSX.Element => {
 
   return (
     <ul className="list-group">
-      {types[currentFilter]?.map((todo: ITodo) => (
+      {currentTodos[currentFilter]?.map((todo: ITodo) => (
         <TodoItem key={todo.id} id={todo.id} title={todo.title} completed={todo.completed} />
       ))}
     </ul>

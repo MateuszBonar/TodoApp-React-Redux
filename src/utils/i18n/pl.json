@@ -8,6 +8,9 @@
     "inf_title": "Moja To Do lista",
     "inf_filter_all": "Wszystkie",
     "inf_filter_unfinished": "Nieukończone",
-    "inf_filter_finished": "Ukończone"
+    "inf_filter_finished": "Ukończone",
+    "inf_active_language": "Aktywny język",
+    "inf_lang_pl": "Polski",
+    "inf_lang_en": "Angielski"
   }
 }

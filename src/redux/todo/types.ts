@@ -15,6 +15,7 @@ export interface ITodo {
 export interface ITodoModuleStore extends IStoreModule {
   todos: ITodo[];
   currentFilter: FILTER_TYPES;
+  currentLanguage: string;
 }
 
 export type TodoActionPayload = ITodo | ITodo[] | Error | null;
