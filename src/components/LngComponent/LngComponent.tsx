@@ -6,7 +6,7 @@ import { AVAILABLE_SYSTEM_LANGS, DEFAULT_SYSTEM_LANG } from 'Constants';
 import { useDispatchedActions } from 'Hooks';
 import { todoSlice } from 'Redux/todo/todoSlice';
 import { getTodoModule } from 'Redux/todo';
-import getFlag from 'Utils/functions/getFlag';
+import { getFlag } from 'Utils';
 
 const LngComponent: FC = (): JSX.Element => {
   const { t } = useTranslation();
