@@ -1,6 +1,6 @@
 const BASE_URL = 'http://localhost:7000';
 
-const MODULE_URL = `${BASE_URL}/todos`;
+export const MODULE_URL = `${BASE_URL}/todos`;
 
 export const TODO = {
   GET_ALL: MODULE_URL,
