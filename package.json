@@ -12,9 +12,11 @@
     "@types/node": "^17.0.8",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
     "axios": "^0.24.0",
     "bootstrap": "^4.6.0",
     "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "i18next": "^21.6.6",
     "jest-enzyme": "^7.1.2",
     "react": "^17.0.1",
@@ -24,6 +26,7 @@
     "react-i18next": "^11.15.3",
     "react-redux": "^7.2.2",
     "react-scripts": "4.0.3",
+    "redux-mock-store": "^1.5.4",
     "typescript": "^4.5.4",
     "web-vitals": "^1.0.1"
   },
@@ -53,5 +56,17 @@
   },
   "devDependencies": {
     "@types/react-redux": "^7.1.22"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^Redux(.*)$": "<rootDir>/src/redux$1",
+      "^Hooks(.*)$": "<rootDir>/src/hooks$1",
+      "^Assets(.*)$": "<rootDir>/src/assets$1",
+      "^Components(.*)$": "<rootDir>/src/components$1",
+      "^Pages(.*)$": "<rootDir>/src/pages$1",
+      "^Utils(.*)$": "<rootDir>/src/utils$1",
+      "^Constants(.*)$": "<rootDir>/src/constants$1",
+      "^Api(.*)$": "<rootDir>/src/api$1"
+    }
   }
 }
