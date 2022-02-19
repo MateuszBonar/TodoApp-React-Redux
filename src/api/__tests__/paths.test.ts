@@ -1,7 +1,9 @@
-import { MODULE_URL, TODO } from 'Api';
+import { TODO } from 'Api';
 
 describe('check apis urls', () => {
+  const MODULE_URL = 'http://localhost:7000/todos';
   const id: string = '1';
+
   test('GET_ALL', () => {
     expect(TODO.GET_ALL).toEqual(MODULE_URL);
   });

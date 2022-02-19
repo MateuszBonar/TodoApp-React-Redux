@@ -7,8 +7,6 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { MainPage } from './pages';
-import i18n from './utils/i18n/i18nForTests';
-import { I18nextProvider } from 'react-i18next';
 
 describe('App', () => {
   let store: any;
