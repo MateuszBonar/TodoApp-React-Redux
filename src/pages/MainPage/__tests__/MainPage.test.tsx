@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import MainPage from '../MainPage';
-import i18n, { changeLanguage } from 'i18next';
+import i18n from 'i18next';
 
 describe('MainPage', () => {
   test('should render correctly', () => {
