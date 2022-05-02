@@ -13,7 +13,6 @@ const App: FC = (): JSX.Element => {
     i18next.changeLanguage(currentLanguage || DEFAULT_SYSTEM_LANG);
   }, [currentLanguage]);
 
-  ///404 NotFound z Lazy loading
   return <MainPage />;
 };
 

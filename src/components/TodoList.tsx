@@ -12,9 +12,7 @@ const TodoList: FC = (): JSX.Element => {
 
   const { todos, currentFilter } = useSelector(getTodoModule);
 
-  const currentTodos: {
-    [key in FILTER_TYPES]: ITodo[];
-  } = {
+  const currentTodos: Record<FILTER_TYPES, ITodo[]> = {
     [FILTER_TYPES.ALL]: todos,
     [FILTER_TYPES.FINISHED]: todos.filter(el => el.completed),
     [FILTER_TYPES.UNFINISHED]: todos.filter(el => !el.completed),
@@ -25,7 +23,7 @@ const TodoList: FC = (): JSX.Element => {
   }, []);
 
   return (
-    <ul className="list-group">
+    <ul className='list-group'>
       {currentTodos[currentFilter]?.map((todo: ITodo) => (
         <TodoItem key={todo.id} id={todo.id} title={todo.title} completed={todo.completed} />
       ))}

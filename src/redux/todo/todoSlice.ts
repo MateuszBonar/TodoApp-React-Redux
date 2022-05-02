@@ -21,7 +21,7 @@ export const getTodosAsync = createAsyncThunk(
       })
 );
 
-export const addTodoAsync = createAsyncThunk<ITodo, any>(
+export const addTodoAsync = createAsyncThunk<ITodo, ITodo>(
   'todos/addTodoAsync',
   async (payload: ITodo): Promise<any> =>
     axios
@@ -34,7 +34,7 @@ export const addTodoAsync = createAsyncThunk<ITodo, any>(
       })
 );
 
-export const toggleCompleteAsync = createAsyncThunk<ITodo, any>(
+export const toggleCompleteAsync = createAsyncThunk<ITodo, ITodo>(
   'todos/completeTodoAsync',
   async (payload: ITodo): Promise<any> =>
     axios
@@ -47,7 +47,7 @@ export const toggleCompleteAsync = createAsyncThunk<ITodo, any>(
       })
 );
 
-export const deleteTodoAsync = createAsyncThunk<ITodo, any>(
+export const deleteTodoAsync = createAsyncThunk<ITodo, ITodo>(
   'todos/deleteTodoAsync',
   async (payload: ITodo): Promise<any> =>
     await axios
